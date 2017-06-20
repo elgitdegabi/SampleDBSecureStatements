@@ -23,18 +23,16 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.example.sample.db.securestmt.dao.ExampleDAOImpl;
 import com.example.sample.db.securestmt.dto.ExampleDTO;
 
 @RunWith(SpringRunner.class)
-public class ExampleDAOImplTest {
+public class ExampleSecureDAOImplTest {
 	
 	// include the query because if you change the query accidentally the test case will fail (it's a good checkpoint)
 	final static String QUERY_FIND_ALL_SECURE = " SELECT * FROM USER_TEST WHERE USER = ?";
-	final static String QUERY_FIND_ALL_UNSECURE = " SELECT * FROM USER_TEST WHERE USER = ";
 	
 	@SpyBean
-	ExampleDAOImpl exampleDAOImpl;
+	ExampleSecureDAOImpl exampleSecureDAOImpl;
 	
 	@MockBean
 	DataSource dataSourceMock;
@@ -66,7 +64,8 @@ public class ExampleDAOImplTest {
 	@Test
 	public void findUserInfoByUserWithValidArgumentsShouldReturnAListWithUserInfo() throws Exception {
 		Mockito.doReturn(connectionMock).when(dataSourceMock).getConnection();
-		Mockito.doReturn(preparedStatementMock).when(connectionMock).prepareStatement(QUERY_FIND_ALL_UNSECURE + "'User1'");
+		Mockito.doReturn(preparedStatementMock).when(connectionMock).prepareStatement(QUERY_FIND_ALL_SECURE);
+		Mockito.doNothing().when(preparedStatementMock).setString(Mockito.anyInt(), Mockito.anyString());
 		Mockito.doReturn(resultSetMock).when(preparedStatementMock).executeQuery();
 		
 		// mocks the ResultSet iteration and sets the expect results
@@ -82,7 +81,7 @@ public class ExampleDAOImplTest {
 		Mockito.doNothing().when(connectionMock).close();
 		
 		// invokes the test subject that uses the mocked behaviors		
-		List<ExampleDTO> result = exampleDAOImpl.findUserInfoByUser("User1");
+		List<ExampleDTO> result = exampleSecureDAOImpl.findUserInfoByUser("User1");
 		
 		// assert the expected results of the test case
 		assertThat(result, notNullValue());
@@ -107,6 +106,6 @@ public class ExampleDAOImplTest {
 		Mockito.doNothing().when(preparedStatementMock).close();
 		Mockito.doNothing().when(connectionMock).close();
 
-		exampleDAOImpl.findUserInfoByUser("User1");				
+		exampleSecureDAOImpl.findUserInfoByUser("User1");				
 	}	
 }

@@ -36,13 +36,12 @@ import org.springframework.stereotype.Repository;
 
 import com.example.sample.db.securestmt.dto.ExampleDTO;
 
-@Repository
-public class ExampleDAOImpl implements ExampleDAO {
+@Repository("SecureDAO")
+public class ExampleSecureDAOImpl implements ExampleDAO {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(ExampleDAOImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ExampleSecureDAOImpl.class);
 	
 	final static String QUERY_FIND_ALL_SECURE = " SELECT * FROM USER_TEST WHERE USER = ?";
-	final static String QUERY_FIND_ALL_UNSECURE = " SELECT * FROM USER_TEST WHERE USER = ";
 	
 	@Autowired
 	DataSource dataSource;
@@ -56,9 +55,8 @@ public class ExampleDAOImpl implements ExampleDAO {
 		
 		try {
 			connection = dataSource.getConnection();
-			preparedStatement = connection.prepareStatement(QUERY_FIND_ALL_UNSECURE + "'"+ user +"'");
-			// preparedStatement = connection.prepareStatement(QUERY_FIND_ALL_SECURE);
-			// preparedStatement.setString(1, user);
+			preparedStatement = connection.prepareStatement(QUERY_FIND_ALL_SECURE);
+			preparedStatement.setString(1, user);
 			resultSet = preparedStatement.executeQuery();
 			
 			while (resultSet.next()) {

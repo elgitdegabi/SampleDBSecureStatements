@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -33,6 +34,7 @@ public class ExampleServiceTest {
 	private ExampleService exampleService;
 
 	@MockBean
+	@Qualifier("NonSecureDAO")
 	ExampleDAO exampleDAOMock;
 	
 	private List<ExampleDTO> expectedUsers;

@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.example.sample.db.securestmt.dao.ExampleDAO;
@@ -38,6 +39,7 @@ import com.example.sample.db.securestmt.dto.ExampleDTO;
 public class ExampleService {
 	
 	@Autowired
+	@Qualifier("NonSecureDAO")
 	ExampleDAO exampleDAO;
 	
 	/**
