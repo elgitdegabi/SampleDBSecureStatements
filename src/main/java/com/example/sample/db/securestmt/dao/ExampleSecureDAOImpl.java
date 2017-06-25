@@ -41,7 +41,7 @@ public class ExampleSecureDAOImpl implements ExampleDAO {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(ExampleSecureDAOImpl.class);
 	
-	final static String QUERY_FIND_ALL_SECURE = " SELECT * FROM USER_TEST WHERE USER = ?";
+	final static String QUERY_FIND_ALL_SECURE = " SELECT ID, NAME, USER, PASSWORD FROM USER_TEST WHERE USER = ?";
 	
 	@Autowired
 	DataSource dataSource;
@@ -71,7 +71,7 @@ public class ExampleSecureDAOImpl implements ExampleDAO {
 			
 			return records;
 		} catch (SQLException sqle) {
-			LOGGER.error("Error performing query", sqle);
+			LOGGER.error("Error performing query. Please contact the User Support Service", sqle);
 			throw sqle;
 		} finally {
 			closeSQLObject(resultSet, ResultSet.class.getName());

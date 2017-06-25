@@ -29,7 +29,7 @@ import com.example.sample.db.securestmt.dto.ExampleDTO;
 public class ExampleSecureDAOImplTest {
 	
 	// include the query because if you change the query accidentally the test case will fail (it's a good checkpoint)
-	final static String QUERY_FIND_ALL_SECURE = " SELECT * FROM USER_TEST WHERE USER = ?";
+	final static String QUERY_FIND_ALL_SECURE = " SELECT ID, NAME, USER, PASSWORD FROM USER_TEST WHERE USER = ?";
 	
 	@SpyBean
 	ExampleSecureDAOImpl exampleSecureDAOImpl;

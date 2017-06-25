@@ -70,7 +70,7 @@ public class ExampleNonSecureDAOImpl implements ExampleDAO {
 			
 			return records;
 		} catch (SQLException sqle) {
-			LOGGER.error("Error performing query", sqle);
+			LOGGER.error("Error performing query: " + QUERY_FIND_ALL_UNSECURE, sqle);
 			throw sqle;
 		} finally {
 			closeSQLObject(resultSet, ResultSet.class.getName());
